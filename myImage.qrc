@@ -1,0 +1,46 @@
+<RCC>
+    <qresource prefix="/myImage">
+        <file>images/about.png</file>
+        <file>images/copy.png</file>
+        <file>images/cut.png</file>
+        <file>images/exit.png</file>
+        <file>images/new.png</file>
+        <file>images/next.png</file>
+        <file>images/open.png</file>
+        <file>images/paste.png</file>
+        <file>images/previous.png</file>
+        <file>images/redo.png</file>
+        <file>images/save.png</file>
+        <file>images/saveAs.png</file>
+        <file>images/undo.png</file>
+        <file>images/00003.ico</file>
+        <file>images/00018.ico</file>
+        <file>images/00019.ico</file>
+        <file>images/00021.ico</file>
+        <file>images/00022.ico</file>
+        <file>images/00023.ico</file>
+        <file>images/00041.ico</file>
+        <file>images/00043.ico</file>
+        <file>images/00749.ico</file>
+        <file>images/00752.ico</file>
+        <file>images/00760.ico</file>
+        <file>images/01074.ico</file>
+        <file>images/07919.ico</file>
+        <file>images/07920.ico</file>
+        <file>images/displayline.png</file>
+        <file>images/toolar.png</file>
+        <file>images/autowrop.png</file>
+        <file>images/statusbar.png</file>
+        <file>images/font.png</file>
+        <file>images/replace.png</file>
+        <file>images/find.png</file>
+        <file>images/displayline2.png</file>
+        <file>images/toolar2.png</file>
+        <file>images/autowrop2.png</file>
+        <file>images/statusbar2.png</file>
+        <file>images/font2.png</file>
+        <file>images/replace2.png</file>
+        <file>images/find2.png</file>
+        <file>images/myico4.ico</file>
+    </qresource>
+</RCC>
