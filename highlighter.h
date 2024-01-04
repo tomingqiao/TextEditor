@@ -11,7 +11,9 @@ class Highlighter : public QSyntaxHighlighter
     Q_OBJECT
 
 public:
-    Highlighter(QTextDocument *parent = 0);
+    Highlighter(QTextDocument *parent = 0, QString fe = nullptr);
+    void setFileExtension(QString fe);
+    void addHighlightingRule(int a, int b, int c, QString regularExpression);
 
 protected:
     void highlightBlock(const QString &text) override;
@@ -32,6 +34,8 @@ private:
     QTextCharFormat multiLineCommentFormat;
     QTextCharFormat quotationFormat;
     QTextCharFormat functionFormat;
+
+    QString fileExtension;
 };
 
 #endif // HIGHLIGHTER_H

@@ -14,6 +14,7 @@
 #include "replacedialog.h"
 #include <QFontDialog>
 #include <QColorDialog>
+#include <QDebug>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -120,8 +121,12 @@ void MainWindow::updateMenus() // 更新菜单
 
     AutoWropDetection();
     DisplayLineDetection();
+
     if (activeMdiChild()) {
-        highlighter = new Highlighter(activeMdiChild()->document());
+        QString filename = activeMdiChild()->userFriendlyCurrentFile();
+        int iPos = filename.lastIndexOf(".");
+        QString fileExtension = filename.mid(iPos);
+        highlighter = new Highlighter(activeMdiChild()->document(), fileExtension);
     }
 
 }
