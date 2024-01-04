@@ -120,6 +120,10 @@ void MainWindow::updateMenus() // 更新菜单
 
     AutoWropDetection();
     DisplayLineDetection();
+    if (activeMdiChild()) {
+        highlighter = new Highlighter(activeMdiChild()->document());
+    }
+
 }
 
 MdiChild *MainWindow::activeMdiChild()  // 活动窗口

@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "highlighter.h"
+
 class MdiChild;
 class QMdiSubWindow;
 class QSignalMapper;
@@ -98,6 +100,8 @@ private:
 
 
     void initWindow(); // 初始化窗口
+
+    Highlighter *highlighter;
 
 protected:
     void closeEvent(QCloseEvent *event);  // 关闭事件

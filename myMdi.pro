@@ -12,6 +12,7 @@ TEMPLATE = app
 SOURCES += main.cpp\
     aboutdialog.cpp \
     codeeditor.cpp \
+    highlighter.cpp \
         mainwindow.cpp \
     mdichild.cpp \
     replacedialog.cpp \
@@ -20,6 +21,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     aboutdialog.h \
     codeeditor.h \
+    highlighter.h \
     mdichild.h \
     replacedialog.h \
     searchdialog.h
