@@ -57,6 +57,7 @@ bool MdiChild::loadFile(const QString &fileName) // 加载文件
     }
 
     QTextStream in(&file); // 新建文本流对象
+    in.setCodec("utf-8");
     QApplication::setOverrideCursor(Qt::WaitCursor); // 设置鼠标状态为等待状态
     setPlainText(in.readAll());  // 读取文件的全部文本内容，并添加到编辑器中
     QApplication::restoreOverrideCursor(); // 恢复鼠标状态
@@ -118,6 +119,7 @@ bool MdiChild::saveFile(const QString &fileName) // 保存文件
     }
 
     QTextStream out(&file);
+    out.setCodec("utf-8");
     QApplication::setOverrideCursor(Qt::WaitCursor);
     out << toPlainText(); // 以纯文本文件写入
     QApplication::restoreOverrideCursor();

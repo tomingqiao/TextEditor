@@ -14,6 +14,7 @@ public:
     Highlighter(QTextDocument *parent = 0, QString fe = nullptr);
     void setFileExtension(QString fe);
     void addHighlightingRule(int a, int b, int c, QString regularExpression);
+    void addHighlightingBoldRule(int a, int b, int c, QString regularExpression);
 
 protected:
     void highlightBlock(const QString &text) override;
