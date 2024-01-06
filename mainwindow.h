@@ -19,6 +19,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    QStringList recentFileList;
+
 private slots:
     void on_actionNew_triggered(); // 新建文件菜单
     void updateMenus(); // 更新菜单
@@ -57,7 +59,7 @@ private slots:
 
     void on_actionAbout_triggered();
 
-    void on_actionAboutQt_triggered();
+    //void on_actionAboutQt_triggered();
 
     void on_actionExit_triggered();
 
@@ -86,6 +88,8 @@ private slots:
     void on_actionDisplayLine_triggered(bool checked);
 
     void DisplayLineDetection();
+
+    void on_actionRecentHistory_triggered();
 
 private:
     Ui::MainWindow *ui;

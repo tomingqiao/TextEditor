@@ -15,6 +15,7 @@ SOURCES += main.cpp\
     highlighter.cpp \
         mainwindow.cpp \
     mdichild.cpp \
+    recenthistorydialog.cpp \
     replacedialog.cpp \
     searchdialog.cpp
 
@@ -23,11 +24,13 @@ HEADERS  += mainwindow.h \
     codeeditor.h \
     highlighter.h \
     mdichild.h \
+    recenthistorydialog.h \
     replacedialog.h \
     searchdialog.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
+    recenthistorydialog.ui \
     replacedialog.ui \
     searchdialog.ui
 

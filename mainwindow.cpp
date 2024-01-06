@@ -15,6 +15,7 @@
 #include <QFontDialog>
 #include <QColorDialog>
 #include <QDebug>
+#include "recenthistorydialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -42,8 +43,31 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->actionToolar->setChecked(true);
     ui->actionStatusBar->setChecked(true);
+    RecentHistoryDialog *rhdlg = new RecentHistoryDialog(this, &recentFileList);
+    rhdlg->setAttribute(Qt::WA_DeleteOnClose, true);
+    if (rhdlg->loadFinalFile) {
+        QString fileName = rhdlg->firstFileName; // 获取文件路径
+        if (!fileName.isEmpty()) { // 如果路径不为空，则查看该文件是否已经打开
+            QMdiSubWindow *existing = findMdiChild(fileName);
+            if (existing) { // 如果已经存在，则将对应的子窗口设置为活动窗口
+                ui->mdiArea->setActiveSubWindow(existing);
+                return;
+            }
 
-
+            MdiChild *child = createMdiChild(); // 如果没有打开，则新建子窗口
+            if (child->loadFile(fileName)) {
+                if (recentFileList.contains(fileName)) {
+                    recentFileList.removeOne(fileName);
+                }
+                recentFileList.prepend(fileName);
+                ui->statusBar->showMessage("打开文件成功", 2000);
+                child->show();
+            } else {
+                child->close();
+            }
+        }
+    }
+    rhdlg->close();
 }
 
 
@@ -51,6 +75,10 @@ MainWindow::MainWindow(QWidget *parent) :
 QTextCodec *codec = QTextCodec::codecForName("UTF-8");
 MainWindow::~MainWindow()
 {
+    RecentHistoryDialog *rhdlg = new RecentHistoryDialog(this, &recentFileList);
+    rhdlg->setAttribute(Qt::WA_DeleteOnClose, true);
+    rhdlg->doOn_buttonConfirm_clicked();
+    rhdlg->close();
     delete ui;
 }
 
@@ -151,6 +179,10 @@ void MainWindow::on_actionOpen_triggered() // 打开文件菜单
 
         MdiChild *child = createMdiChild(); // 如果没有打开，则新建子窗口
         if (child->loadFile(fileName)) {
+            if (recentFileList.contains(fileName)) {
+                recentFileList.removeOne(fileName);
+            }
+            recentFileList.prepend(fileName);
             ui->statusBar->showMessage(codec->toUnicode("打开文件成功"), 2000);
             child->show();
         } else {
@@ -296,11 +328,11 @@ void MainWindow::on_actionAbout_triggered() // 关于菜单
     dlg.exec();
 }
 
-void MainWindow::on_actionAboutQt_triggered() // 关于Qt菜单
-{
-    qApp->aboutQt(); // 这里的qApp是QApplication对象的全局指针，
-    // 这行代码相当于QApplication::aboutQt();
-}
+//void MainWindow::on_actionAboutQt_triggered() // 关于Qt菜单
+//{
+//    qApp->aboutQt(); // 这里的qApp是QApplication对象的全局指针，
+//    // 这行代码相当于QApplication::aboutQt();
+//}
 
 
 
@@ -513,5 +545,12 @@ void MainWindow::DisplayLineDetection()
             ui->actionDisplayLine->setChecked(false);
         }
     }
+}
+
+
+void MainWindow::on_actionRecentHistory_triggered()
+{
+    RecentHistoryDialog dlg(this, &recentFileList);
+    dlg.exec();
 }
 
