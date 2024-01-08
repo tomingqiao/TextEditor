@@ -9,6 +9,9 @@
 #include <QPushButton>
 #include <QMenu>
 #include <qtextcodec.h>
+#include <QTextBlock>
+#include <QDesktopServices>
+
 MdiChild::MdiChild(QWidget *parent) :
     CodeEditor(parent)
 {
@@ -87,6 +90,35 @@ void MdiChild::setCurrentFile(const QString &fileName) // 设置当前文件
 QString MdiChild::userFriendlyCurrentFile() // 提取文件名
 {
     return QFileInfo(curFile).fileName(); // 从文件路径中提取文件名
+}
+
+void MdiChild::mousePressEvent(QMouseEvent *e)
+{
+    QPlainTextEdit::mousePressEvent(e);
+    if (e->button() != Qt::LeftButton)
+        return;
+    QRegExp urlRex =
+        QRegExp("(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?");
+    //获取光标所在的位置
+    QTextCursor cursor = textCursor();
+    QString str = cursor.block().text();
+    int blockPos = cursor.positionInBlock();
+    //匹配正则，如果光标所在位置是一个链接,那么直接打开
+    int pos = 0;
+    int length = 0;
+    while ((pos = urlRex.indexIn(str, pos)) != -1) {
+        length = urlRex.matchedLength();
+        if (blockPos - pos < length) {
+            auto temp = str.mid(pos, length);
+            QUrl url(temp);
+            if (blockPos >= pos) {
+                QDesktopServices::openUrl(QUrl(url));
+            }
+
+            break;
+        }
+        pos += urlRex.matchedLength();
+    }
 }
 
 bool MdiChild::save() // 保存操作

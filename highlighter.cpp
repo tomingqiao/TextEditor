@@ -200,6 +200,14 @@ Highlighter::Highlighter(QTextDocument *parent, QString fe)
         rule.format = tcf1;
         highlightingRules.append(rule);
     }
+    QTextCharFormat tcf1;
+    HighlightingRule rule;
+    tcf1.setForeground(QColor(161, 216, 242));
+    tcf1.setFontUnderline(true);
+    rule.pattern = QRegularExpression(
+                       QStringLiteral("(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?"));
+    rule.format = tcf1;
+    highlightingRules.append(rule);
     /*else {
         HighlightingRule rule;
 

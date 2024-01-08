@@ -19,7 +19,6 @@ public:
     QStringList *mainRecentFileList;
     int loadFinalFile;
     QString firstFileName;
-
     void updateList();
     void setMainRecentFileList(QStringList *mrfl);
     void doOn_buttonConfirm_clicked();

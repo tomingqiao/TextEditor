@@ -20,11 +20,17 @@ public:
     ~MainWindow();
 
     QStringList recentFileList;
+    Ui::MainWindow *ui;
+    QMdiSubWindow *findMdiChild(const QString &fileName);// 查找子窗口
+
+public slots:
+
+    MdiChild *createMdiChild(); // 创建子窗口
 
 private slots:
     void on_actionNew_triggered(); // 新建文件菜单
     void updateMenus(); // 更新菜单
-    MdiChild *createMdiChild(); // 创建子窗口
+
     void setActiveSubWindow(QWidget *window); // 设置活动子窗口
 
     void on_actionOpen_triggered(); // 打开文件菜单
@@ -92,10 +98,10 @@ private slots:
     void on_actionRecentHistory_triggered();
 
 private:
-    Ui::MainWindow *ui;
+
     QAction *actionSeparator; // 分隔符
     MdiChild *activeMdiChild(); // 活动窗口
-    QMdiSubWindow *findMdiChild(const QString &fileName);// 查找子窗口
+
 
     QSignalMapper *windowMapper; // 信号映射器
 

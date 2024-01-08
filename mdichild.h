@@ -3,6 +3,7 @@
 
 #include <QTextEdit>
 #include "codeeditor.h"
+#include <QMouseEvent>
 
 class MdiChild : public CodeEditor
 {
@@ -19,6 +20,7 @@ public:
     {
         return curFile;   // 返回当前文件路径
     }
+    void mousePressEvent(QMouseEvent *e);
 protected:
     void closeEvent(QCloseEvent *event); // 关闭事件
     void contextMenuEvent(QContextMenuEvent *e); // 右键菜单事件

@@ -3,6 +3,9 @@
 #include <QFile>
 #include <QtDebug>
 #include <QListWidgetItem>
+#include "mdichild.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
 RecentHistoryDialog::RecentHistoryDialog(QWidget *parent, QStringList *mrfl) :
     QDialog(parent),
@@ -138,6 +141,33 @@ void RecentHistoryDialog::on_buttonConfirm_clicked()
         }
 
         file.close();
+    }
+    QListWidgetItem *selectedItem = ui->listWidgetRecentFile->currentItem();
+    if (selectedItem) {
+        MainWindow *mainWindow = (MainWindow *)parentWidget();
+        QString text = selectedItem->text();
+        QString fileName = text; // 获取文件路径
+        if (!fileName.isEmpty()) { // 如果路径不为空，则查看该文件是否已经打开
+            QMdiSubWindow *existing = mainWindow->findMdiChild(fileName);
+            if (existing) { // 如果已经存在，则将对应的子窗口设置为活动窗口
+                mainWindow->ui->mdiArea->setActiveSubWindow(existing);
+                return;
+            }
+
+            MdiChild *child = mainWindow->createMdiChild(); // 如果没有打开，则新建子窗口
+            if (child->loadFile(fileName)) {
+                if (recentFileList.contains(fileName)) {
+                    recentFileList.removeOne(fileName);
+                }
+                recentFileList.prepend(fileName);
+                mainWindow->ui->statusBar->showMessage("打开文件成功", 2000);
+                child->show();
+            } else {
+                child->close();
+            }
+        }
+    } else {
+
     }
     close();
 }
