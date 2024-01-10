@@ -36,7 +36,7 @@ void MdiChild::newFile() // 新建文件操作
 
 
     // 设置窗口标题，使用[*]可以在文档被更改后在文件名称后显示”*“号
-    setWindowTitle(curFile + "[*]" + codec1->toUnicode(" - 筱忆多文档编辑器"));
+    setWindowTitle(curFile + "[*]" + codec1->toUnicode(" - 文本编辑器"));
 
     // 当文档被更改时发射contentsChanged()信号，
     // 执行我们的documentWasModified()槽函数
@@ -157,7 +157,7 @@ QString MdiChild::userFriendlyCurrentFile() // 提取文件名
     return QFileInfo(curFile).fileName(); // 从文件路径中提取文件名
 }
 
-void MdiChild::mousePressEvent(QMouseEvent *e)
+void MdiChild::mousePressEvent(QMouseEvent *e)//重写鼠标点击事件
 {
     QPlainTextEdit::mousePressEvent(e);
     if (e->button() != Qt::LeftButton)
@@ -166,7 +166,7 @@ void MdiChild::mousePressEvent(QMouseEvent *e)
         QRegExp("(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&:/~\\+#]*[\\w\\-\\@?^=%&/~\\+#])?");
     //获取光标所在的位置
     QTextCursor cursor = textCursor();
-    QString str = cursor.block().text();
+    QString str = cursor.block().text();//获得光标所在文本块
     int blockPos = cursor.positionInBlock();
     //匹配正则，如果光标所在位置是一个链接,那么直接打开
     int pos = 0;

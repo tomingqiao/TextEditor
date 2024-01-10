@@ -19,9 +19,9 @@ public:
     QStringList *mainRecentFileList;
     int loadFinalFile;
     QString firstFileName;
-    void updateList();
-    void setMainRecentFileList(QStringList *mrfl);
-    void doOn_buttonConfirm_clicked();
+    void updateList();//更新listWidget
+    void setMainRecentFileList(QStringList *mrfl);//获得主窗口历史列表
+    void doOn_buttonConfirm_clicked();//执行确定按钮
 
 private slots:
     void on_buttonConfirm_clicked();

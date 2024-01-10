@@ -12,9 +12,10 @@ class Highlighter : public QSyntaxHighlighter
 
 public:
     Highlighter(QTextDocument *parent = 0, QString fe = nullptr);
-    void setFileExtension(QString fe);
-    void addHighlightingRule(int a, int b, int c, QString regularExpression);
-    void addHighlightingBoldRule(int a, int b, int c, QString regularExpression);
+    void setFileExtension(QString fe);//得到文件后缀名
+    void addHighlightingRule(int a, int b, int c, QString regularExpression);//添加高亮规则
+    void addHighlightingBoldRule(int a, int b, int c,
+                                 QString regularExpression);//添加bold高亮规则
 
 protected:
     void highlightBlock(const QString &text) override;

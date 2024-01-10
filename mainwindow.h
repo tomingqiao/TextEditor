@@ -22,7 +22,7 @@ public:
     QStringList recentFileList;
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);// 查找子窗口
-    void createMdiChildByFileName(QString fn);
+    void createMdiChildByFileName(QString fn);//根据文件名创建子窗口
 
 public slots:
 
@@ -90,11 +90,11 @@ private slots:
 
     void on_action_AutoWrop_triggered();
 
-    void AutoWropDetection();
+    void AutoWropDetection();//自动换行状态检测
 
     void on_actionDisplayLine_triggered(bool checked);
 
-    void DisplayLineDetection();
+    void DisplayLineDetection();//显示行号状态检测
 
     void on_actionRecentHistory_triggered();
 

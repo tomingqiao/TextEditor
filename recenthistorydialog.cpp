@@ -11,13 +11,13 @@ RecentHistoryDialog::RecentHistoryDialog(QWidget *parent, QStringList *mrfl) :
     ui(new Ui::RecentHistoryDialog)
 {
     ui->setupUi(this);
-    setMainRecentFileList(mrfl);
-    QFile file("E:\\qt\\project\\mynotepad\\recentFileList.txt");
+    setMainRecentFileList(mrfl);//得到主窗口历史列表
+    QFile file("E:\\qt\\project\\mynotepad\\recentFileList.txt");//打开配置文件
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "打开失败！";
     }
 
-    if (!file.atEnd()) {
+    if (!file.atEnd()) {//获得保存最近文件列表配置
         QByteArray line = file.readLine();
         QString str(line);
         str.remove("\n");
@@ -26,7 +26,7 @@ RecentHistoryDialog::RecentHistoryDialog(QWidget *parent, QStringList *mrfl) :
         } else if (str == "0")
             ui->checkBoxSaveFileList->setChecked(false);
     }
-    if (!file.atEnd()) {
+    if (!file.atEnd()) {//获得启动时打开最后文件配置
         QByteArray line = file.readLine();
         QString str(line);
         str.remove("\n");
@@ -40,13 +40,13 @@ RecentHistoryDialog::RecentHistoryDialog(QWidget *parent, QStringList *mrfl) :
 
     }
     if (!file.atEnd()) {
-        QByteArray line = file.readLine();
+        QByteArray line = file.readLine();//获得最后打开文件
         QString str(line);
         str.remove("\n");
         firstFileName = str;
 
     }
-    while (!file.atEnd()) {
+    while (!file.atEnd()) {//获得最近打开文件历史列表
         QByteArray line = file.readLine();
         QString str(line);
         str.remove("\n");
@@ -55,20 +55,20 @@ RecentHistoryDialog::RecentHistoryDialog(QWidget *parent, QStringList *mrfl) :
         }
 
     }
-    if (!mainRecentFileList->isEmpty()) {
+    if (!mainRecentFileList->isEmpty()) {//将主窗口最近历史列表添加到子窗口列表
         for (int i = mainRecentFileList->length() - 1; i >= 0 ; i-- ) {
-            if (recentFileList.contains(mainRecentFileList->at(i))) {
+            while (recentFileList.contains(mainRecentFileList->at(i))) {
                 recentFileList.removeOne(mainRecentFileList->at(i));
             }
             recentFileList.prepend(mainRecentFileList->at(i));
         }
     }
-    *mainRecentFileList = recentFileList;
+    *mainRecentFileList = recentFileList;//添加后更新主窗口列表
     if (!recentFileList.isEmpty()) {
-        firstFileName = recentFileList.at(0);
+        firstFileName = recentFileList.at(0);//设置最后打开文件
     }
 
-    updateList();
+    updateList();//更新listwidget
 }
 
 RecentHistoryDialog::~RecentHistoryDialog()
@@ -76,7 +76,7 @@ RecentHistoryDialog::~RecentHistoryDialog()
     delete ui;
 }
 
-void RecentHistoryDialog::updateList()
+void RecentHistoryDialog::updateList()//更新listwidget
 {
     ui->listWidgetRecentFile->clear();
     for (int i = 0; i < recentFileList.size(); ++i) {
@@ -88,12 +88,12 @@ void RecentHistoryDialog::updateList()
     }
 }
 
-void RecentHistoryDialog::setMainRecentFileList(QStringList *mrfl)
+void RecentHistoryDialog::setMainRecentFileList(QStringList *mrfl)//得到主窗口历史列表
 {
     mainRecentFileList = mrfl;
 }
 
-void RecentHistoryDialog::doOn_buttonConfirm_clicked()
+void RecentHistoryDialog::doOn_buttonConfirm_clicked()//执行确定按钮
 {
     on_buttonConfirm_clicked();
 }
@@ -106,7 +106,7 @@ void RecentHistoryDialog::on_buttonConfirm_clicked()
     int row = 0;
     QString sfl;
     QString lff;
-    if (ui->checkBoxSaveFileList->isChecked()) {
+    if (ui->checkBoxSaveFileList->isChecked()) {//配置相关配置
         sfl = "1";
     } else {
         sfl = "0";
@@ -126,7 +126,8 @@ void RecentHistoryDialog::on_buttonConfirm_clicked()
         file.resize("tate.txt", 0); //清空内容
 
         QTextStream stream( &file );//开始写入文本
-        stream << sfl << "\r\n" << lff << "\r\n" << firstFileName << "\r\n";
+        stream << sfl << "\r\n" << lff << "\r\n" << firstFileName <<
+               "\r\n";//将相关配置写入配置文件
         if (ui->checkBoxSaveFileList->isChecked()) {
             while (row <
                     (ui->listWidgetRecentFile->count())) { //从wistlidget里一行一行的读取文本并存入lines里边
@@ -141,7 +142,8 @@ void RecentHistoryDialog::on_buttonConfirm_clicked()
 
         file.close();
     }
-    QListWidgetItem *selectedItem = ui->listWidgetRecentFile->currentItem();
+    QListWidgetItem *selectedItem =
+        ui->listWidgetRecentFile->currentItem();//如果有选择文件名，创建子窗口
     if (selectedItem) {
         MainWindow *mainWindow = (MainWindow *)parentWidget();
         QString text = selectedItem->text();
@@ -161,7 +163,7 @@ void RecentHistoryDialog::on_buttonClose_clicked()
 
 void RecentHistoryDialog::on_buttonDeleteAll_clicked()
 {
-    recentFileList.clear();
+    recentFileList.clear();//清空历史列表
     updateList();
 }
 
@@ -169,7 +171,8 @@ void RecentHistoryDialog::on_buttonDeleteAll_clicked()
 void RecentHistoryDialog::on_buttonDelete_clicked()
 {
 
-    QListWidgetItem *selectedItem = ui->listWidgetRecentFile->currentItem();
+    QListWidgetItem *selectedItem =
+        ui->listWidgetRecentFile->currentItem();//如果有选择文件名，删除相关项目
     if (selectedItem) {
         QString text = selectedItem->text();
         recentFileList.removeOne(text);

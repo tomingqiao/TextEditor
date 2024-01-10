@@ -43,10 +43,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->actionToolar->setChecked(true);
     ui->actionStatusBar->setChecked(true);
-    RecentHistoryDialog *rhdlg = new RecentHistoryDialog(this, &recentFileList);
+    RecentHistoryDialog *rhdlg = new RecentHistoryDialog(this,
+                                                         &recentFileList);//创建最近历史对象，进行历史列表初始化
     rhdlg->setAttribute(Qt::WA_DeleteOnClose, true);
     if (rhdlg->loadFinalFile) {
-        createMdiChildByFileName(rhdlg->firstFileName);
+        createMdiChildByFileName(rhdlg->firstFileName);//打开退出时最后打开的文件
     }
     rhdlg->close();
 }
@@ -56,7 +57,8 @@ MainWindow::MainWindow(QWidget *parent) :
 QTextCodec *codec = QTextCodec::codecForName("UTF-8");
 MainWindow::~MainWindow()
 {
-    RecentHistoryDialog *rhdlg = new RecentHistoryDialog(this, &recentFileList);
+    RecentHistoryDialog *rhdlg = new RecentHistoryDialog(this,
+                                                         &recentFileList);//主程序退出时，创建最近历史对象，更新配置
     rhdlg->setAttribute(Qt::WA_DeleteOnClose, true);
     rhdlg->doOn_buttonConfirm_clicked();
     rhdlg->close();
@@ -180,7 +182,7 @@ void MainWindow::createMdiChildByFileName(QString fn)
 
         MdiChild *child = createMdiChild(); // 如果没有打开，则新建子窗口
         if (child->loadFile(fileName)) {
-            if (recentFileList.contains(fileName)) {
+            while (recentFileList.contains(fileName)) {
                 recentFileList.removeOne(fileName);
             }
             recentFileList.prepend(fileName);
@@ -240,7 +242,6 @@ void MainWindow::updateWindowMenu() // 更新窗口菜单
     }
 }
 
-/********************1.3.3小节对下面这些代码进行了部分省略****************************************/
 
 void MainWindow::on_actionSave_triggered() // 保存菜单
 {
@@ -315,13 +316,6 @@ void MainWindow::on_actionAbout_triggered() // 关于菜单
     dlg.exec();
 }
 
-//void MainWindow::on_actionAboutQt_triggered() // 关于Qt菜单
-//{
-//    qApp->aboutQt(); // 这里的qApp是QApplication对象的全局指针，
-//    // 这行代码相当于QApplication::aboutQt();
-//}
-
-
 
 void MainWindow::on_actionExit_triggered() // 退出菜单
 {
@@ -373,7 +367,7 @@ void MainWindow::showTextRowAndCol() // 显示文本的行号和列号
 
 void MainWindow::initWindow() // 初始化窗口
 {
-    setWindowTitle(codec->toUnicode("筱忆多文档编辑器"));
+    setWindowTitle(codec->toUnicode("文本编辑器"));
 
     // 我们在工具栏上单击鼠标右键时，可以关闭工具栏
     ui->mainToolBar->setWindowTitle(codec->toUnicode("工具栏"));
@@ -382,14 +376,11 @@ void MainWindow::initWindow() // 初始化窗口
     ui->mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     ui->mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
-    ui->statusBar->showMessage(codec->toUnicode("欢迎使用筱忆多文档编辑器"));
+    ui->statusBar->showMessage(codec->toUnicode("欢迎使用文本编辑器"));
 
     QLabel *label = new QLabel(this);
-    label->setFrameStyle(QFrame::Box | QFrame::Sunken);
     label->setText(
-        tr("<a href=\"https://blog.csdn.net/qq_46424406?spm=1003.2020.3001.5343\">xiaoyi.com</a>"));
-    label->setTextFormat(Qt::RichText); // 标签文本为富文本
-    label->setOpenExternalLinks(true);  // 可以打开外部链接
+        tr("叶发通"));
     ui->statusBar->addPermanentWidget(label);
 
     ui->actionNew->setStatusTip(codec->toUnicode("创建一个文件"));

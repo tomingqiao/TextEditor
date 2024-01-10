@@ -4,9 +4,9 @@
 Highlighter::Highlighter(QTextDocument *parent, QString fe)
     : QSyntaxHighlighter(parent)
 {
-    setFileExtension(fe);
+    setFileExtension(fe);//得到文件扩展名
 
-
+    //根据文件扩展名添加高亮规则
     if (fileExtension == ".java" || fileExtension == ".c" || fileExtension == ".h"
             || fileExtension == ".js" ||
             fileExtension == ".s" || fileExtension == ".cpp" || fileExtension == ".scala") {
@@ -220,7 +220,8 @@ void Highlighter::setFileExtension(QString fe)
     fileExtension = fe;
 }
 
-void Highlighter::addHighlightingRule(int a, int b, int c, QString regularExpression)
+void Highlighter::addHighlightingRule(int a, int b, int c,
+                                      QString regularExpression)//添加高亮规则
 {
     HighlightingRule rule;
     QTextCharFormat tcf;
@@ -230,7 +231,8 @@ void Highlighter::addHighlightingRule(int a, int b, int c, QString regularExpres
     highlightingRules.append(rule);
 }
 
-void Highlighter::addHighlightingBoldRule(int a, int b, int c, QString regularExpression)
+void Highlighter::addHighlightingBoldRule(int a, int b, int c,
+                                          QString regularExpression)//添加bold高亮规则
 {
     HighlightingRule rule;
     QTextCharFormat tcf;

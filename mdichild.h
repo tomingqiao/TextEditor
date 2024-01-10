@@ -22,10 +22,10 @@ public:
         return curFile;   // 返回当前文件路径
     }
     void mousePressEvent(QMouseEvent *e);
-    void createPdf();
-    void setUpPage();
-    void doPrint();
-    void doPrintPreview();
+    void createPdf();//创建pdf
+    void setUpPage();//打印机页面设置
+    void doPrint();//打印
+    void doPrintPreview();//打印预览
 protected:
     void closeEvent(QCloseEvent *event); // 关闭事件
     void contextMenuEvent(QContextMenuEvent *e); // 右键菜单事件
@@ -33,7 +33,7 @@ private slots:
     void documentWasModified();  // 文档被更改时，显示更改状态标志
 
 
-    void printPreview(QPrinter *printer);
+    void printPreview(QPrinter *printer);//打印预览里的打印
 
 private:
     bool maybeSave();  // 是否需要保存

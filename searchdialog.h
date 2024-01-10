@@ -18,9 +18,9 @@ public:
     ~SearchDialog();
 
 private slots:
-    void on_btFindNext_clicked();
+    void on_btFindNext_clicked();//查找下一个
 
-    void on_btCancel_clicked();
+    void on_btCancel_clicked();//取消
 
 private:
     Ui::SearchDialog *ui;

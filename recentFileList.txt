@@ -1,7 +1,8 @@
 1
 1
-E:/qt/cs/jj.txt
+E:/qt/project/build-mynotepad-Desktop_Qt_5_12_11_MinGW_64_bit-Debug/ui_searchdialog.h
+E:/qt/project/build-mynotepad-Desktop_Qt_5_12_11_MinGW_64_bit-Debug/ui_searchdialog.h
+E:/qt/project/build-mynotepad-Desktop_Qt_5_12_11_MinGW_64_bit-Debug/tate.txt
 E:/qt/cs/jj.txt
 E:/qt/project/build-mynotepad-Desktop_Qt_5_12_11_MinGW_64_bit-Debug/myMdi_resource.rc
 E:/javaee/projects/Meiyijia/WebContent/LoginSuccess.jsp
-E:/qt/project/build-mynotepad-Desktop_Qt_5_12_11_MinGW_64_bit-Debug/tate.txt
