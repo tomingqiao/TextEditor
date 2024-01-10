@@ -42,5 +42,7 @@
         <file>images/replace2.png</file>
         <file>images/find2.png</file>
         <file>images/myico4.ico</file>
+        <file>images/print2.png</file>
+        <file>images/recentHistory2.png</file>
     </qresource>
 </RCC>

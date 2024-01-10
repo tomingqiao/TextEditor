@@ -46,26 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     RecentHistoryDialog *rhdlg = new RecentHistoryDialog(this, &recentFileList);
     rhdlg->setAttribute(Qt::WA_DeleteOnClose, true);
     if (rhdlg->loadFinalFile) {
-        QString fileName = rhdlg->firstFileName; // 获取文件路径
-        if (!fileName.isEmpty()) { // 如果路径不为空，则查看该文件是否已经打开
-            QMdiSubWindow *existing = findMdiChild(fileName);
-            if (existing) { // 如果已经存在，则将对应的子窗口设置为活动窗口
-                ui->mdiArea->setActiveSubWindow(existing);
-                return;
-            }
-
-            MdiChild *child = createMdiChild(); // 如果没有打开，则新建子窗口
-            if (child->loadFile(fileName)) {
-                if (recentFileList.contains(fileName)) {
-                    recentFileList.removeOne(fileName);
-                }
-                recentFileList.prepend(fileName);
-                ui->statusBar->showMessage("打开文件成功", 2000);
-                child->show();
-            } else {
-                child->close();
-            }
-        }
+        createMdiChildByFileName(rhdlg->firstFileName);
     }
     rhdlg->close();
 }
@@ -131,6 +112,7 @@ void MainWindow::updateMenus() // 更新菜单
     ui->action_AutoWrop->setEnabled(hasMdiChild);
     ui->actionFontColor->setEnabled(hasMdiChild);
     ui->actionFontBackgroundColor->setEnabled(hasMdiChild);
+    ui->actionPrint->setEnabled(hasMdiChild);
 
 
     actionSeparator->setVisible(hasMdiChild); // 设置间隔器是否显示
@@ -169,7 +151,26 @@ MdiChild *MainWindow::activeMdiChild()  // 活动窗口
 
 void MainWindow::on_actionOpen_triggered() // 打开文件菜单
 {
-    QString fileName = QFileDialog::getOpenFileName(this); // 获取文件路径
+    createMdiChildByFileName(QFileDialog::getOpenFileName(this));
+}
+
+QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)  // 查找子窗口
+{
+
+    QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
+
+    // 利用foreach语句遍历子窗口列表，如果其文件路径和要查找的路径相同，则返回该窗口
+    foreach (QMdiSubWindow *window, ui->mdiArea->subWindowList()) {
+        MdiChild *mdiChild = qobject_cast<MdiChild *>(window->widget());
+        if (mdiChild->currentFile() == canonicalFilePath)
+            return window;
+    }
+    return 0;
+}
+
+void MainWindow::createMdiChildByFileName(QString fn)
+{
+    QString fileName = fn; // 获取文件路径
     if (!fileName.isEmpty()) { // 如果路径不为空，则查看该文件是否已经打开
         QMdiSubWindow *existing = findMdiChild(fileName);
         if (existing) { // 如果已经存在，则将对应的子窗口设置为活动窗口
@@ -189,20 +190,6 @@ void MainWindow::on_actionOpen_triggered() // 打开文件菜单
             child->close();
         }
     }
-}
-
-QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)  // 查找子窗口
-{
-
-    QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
-
-    // 利用foreach语句遍历子窗口列表，如果其文件路径和要查找的路径相同，则返回该窗口
-    foreach (QMdiSubWindow *window, ui->mdiArea->subWindowList()) {
-        MdiChild *mdiChild = qobject_cast<MdiChild *>(window->widget());
-        if (mdiChild->currentFile() == canonicalFilePath)
-            return window;
-    }
-    return 0;
 }
 
 void MainWindow::setActiveSubWindow(QWidget *window) // 设置活动子窗口
@@ -425,6 +412,8 @@ void MainWindow::initWindow() // 初始化窗口
     ui->actionAbout->setStatusTip(codec->toUnicode("显示本软件的介绍"));
     ui->actionFind->setStatusTip(codec->toUnicode("查找"));
     ui->actionReplace->setStatusTip(codec->toUnicode("替换"));
+    ui->actionRecentHistory->setStatusTip(codec->toUnicode("最近历史"));
+    ui->actionPrint->setStatusTip(codec->toUnicode("打印窗口文本"));
 }
 
 
@@ -498,7 +487,7 @@ void MainWindow::on_actionStatusBar_triggered()
 void MainWindow::on_action_AutoWrop_triggered(bool checked)
 {
     if (checked) {
-
+//空
     }
 }
 
@@ -552,5 +541,13 @@ void MainWindow::on_actionRecentHistory_triggered()
 {
     RecentHistoryDialog dlg(this, &recentFileList);
     dlg.exec();
+}
+
+
+void MainWindow::on_actionPrint_triggered()
+{
+    if (activeMdiChild()) {
+        activeMdiChild()->doPrintPreview();
+    }
 }
 

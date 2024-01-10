@@ -45,6 +45,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
     <addaction name="actionRecentHistory"/>
+    <addaction name="actionPrint"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -488,11 +489,27 @@
    </property>
   </action>
   <action name="actionRecentHistory">
+   <property name="icon">
+    <iconset resource="myImage.qrc">
+     <normaloff>:/myImage/images/recentHistory2.png</normaloff>:/myImage/images/recentHistory2.png</iconset>
+   </property>
    <property name="text">
     <string>最近历史(&amp;H)</string>
    </property>
    <property name="toolTip">
     <string>最近历史</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="myImage.qrc">
+     <normaloff>:/myImage/images/print2.png</normaloff>:/myImage/images/print2.png</iconset>
+   </property>
+   <property name="text">
+    <string>打印(&amp;P)</string>
+   </property>
+   <property name="toolTip">
+    <string>打印</string>
    </property>
   </action>
  </widget>

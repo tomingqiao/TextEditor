@@ -22,6 +22,7 @@ public:
     QStringList recentFileList;
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);// 查找子窗口
+    void createMdiChildByFileName(QString fn);
 
 public slots:
 
@@ -96,6 +97,8 @@ private slots:
     void DisplayLineDetection();
 
     void on_actionRecentHistory_triggered();
+
+    void on_actionPrint_triggered();
 
 private:
 
