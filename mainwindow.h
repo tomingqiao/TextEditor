@@ -100,6 +100,8 @@ private slots:
 
     void on_actionPrint_triggered();
 
+    void on_actionSelectAll_triggered();
+
 private:
 
     QAction *actionSeparator; // 分隔符

@@ -78,7 +78,7 @@ email:3107099063@qq.com</string>
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>v1.0 build20231106</string>
+          <string>v1.0 build:20240101</string>
          </property>
         </widget>
        </item>

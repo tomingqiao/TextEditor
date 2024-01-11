@@ -170,7 +170,8 @@ QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)  // 查找子�
     return 0;
 }
 
-void MainWindow::createMdiChildByFileName(QString fn)
+void MainWindow::createMdiChildByFileName(QString
+                                          fn) //根据文件名创建打开文件创建子窗口
 {
     QString fileName = fn; // 获取文件路径
     if (!fileName.isEmpty()) { // 如果路径不为空，则查看该文件是否已经打开
@@ -399,12 +400,24 @@ void MainWindow::initWindow() // 初始化窗口
     ui->actionTile->setStatusTip(codec->toUnicode("平铺所有窗口"));
     ui->actionCascade->setStatusTip(codec->toUnicode("层叠所有窗口"));
     ui->actionNext->setStatusTip(codec->toUnicode("将焦点移动到下一个窗口"));
-    ui->actionPrevious->setStatusTip(codec->toUnicode("将焦点移动到前一个窗口"));
+    ui->actionPrevious->setStatusTip(codec->toUnicode("将焦点移动到上一个窗口"));
     ui->actionAbout->setStatusTip(codec->toUnicode("显示本软件的介绍"));
-    ui->actionFind->setStatusTip(codec->toUnicode("查找"));
-    ui->actionReplace->setStatusTip(codec->toUnicode("替换"));
-    ui->actionRecentHistory->setStatusTip(codec->toUnicode("最近历史"));
-    ui->actionPrint->setStatusTip(codec->toUnicode("打印窗口文本"));
+    ui->actionFind->setStatusTip(codec->toUnicode("在文本中查找"));
+    ui->actionReplace->setStatusTip(codec->toUnicode("在文本中查找并替换"));
+    ui->actionRecentHistory->setStatusTip(codec->toUnicode("显示最近打开的文件"));
+    ui->actionPrint->setStatusTip(codec->toUnicode("打印窗口中的文本"));
+    ui->actionSelectAll->setStatusTip(codec->toUnicode("选择窗口中的所有文本"));
+    ui->action_AutoWrop->setStatusTip(
+        codec->toUnicode("使超过窗口的文本自动换到下一行"));
+    ui->actionDisplayLine->setStatusTip(codec->toUnicode("在每行文本的前面显示行数"));
+    ui->actionSelectAll->setStatusTip(codec->toUnicode("选择窗口中的所有文本"));
+    ui->actionFont->setStatusTip(codec->toUnicode("修改窗口中的字体格式"));
+    ui->actionFontColor->setStatusTip(codec->toUnicode("修改窗口中的字体颜色"));
+    ui->actionFontBackgroundColor->setStatusTip(
+        codec->toUnicode("修改窗口中的字体背景颜色"));
+    ui->actionEditorBackgroundColor->setStatusTip(codec->toUnicode("修改编辑器的背景颜色"));
+    ui->actionStatusBar->setStatusTip(codec->toUnicode("显示或隐藏主窗口的状态栏"));
+    ui->actionToolar->setStatusTip(codec->toUnicode("显示或隐藏主窗口的工具栏"));
 }
 
 
@@ -539,6 +552,14 @@ void MainWindow::on_actionPrint_triggered()
 {
     if (activeMdiChild()) {
         activeMdiChild()->doPrintPreview();
+    }
+}
+
+
+void MainWindow::on_actionSelectAll_triggered()
+{
+    if (activeMdiChild()) {
+        activeMdiChild()->selectAll();
     }
 }
 

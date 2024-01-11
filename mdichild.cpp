@@ -209,7 +209,7 @@ bool MdiChild::saveFile(const QString &fileName) // 保存文件
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, codec1->toUnicode("筱忆多文档编辑器"),
+        QMessageBox::warning(this, codec1->toUnicode("文本编辑器"),
                              codec1->toUnicode("无法写入文件 %1:\n%2.")
                              .arg(fileName).arg(file.errorString()));
         return false;
