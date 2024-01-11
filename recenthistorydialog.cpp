@@ -12,48 +12,49 @@ RecentHistoryDialog::RecentHistoryDialog(QWidget *parent, QStringList *mrfl) :
 {
     ui->setupUi(this);
     setMainRecentFileList(mrfl);//得到主窗口历史列表
-    QFile file("E:\\qt\\project\\mynotepad\\recentFileList.txt");//打开配置文件
+    QFile file("recentFileList.txt");//打开配置文件
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "打开失败！";
-    }
-
-    if (!file.atEnd()) {//获得保存最近文件列表配置
-        QByteArray line = file.readLine();
-        QString str(line);
-        str.remove("\n");
-        if (str == "1") {
-            ui->checkBoxSaveFileList->setChecked(true);
-        } else if (str == "0")
-            ui->checkBoxSaveFileList->setChecked(false);
-    }
-    if (!file.atEnd()) {//获得启动时打开最后文件配置
-        QByteArray line = file.readLine();
-        QString str(line);
-        str.remove("\n");
-        if (str == "1") {
-            ui->checkBoxLoadFinalFile->setChecked(true);
-            loadFinalFile = 1;
-        } else if (str == "0") {
-            ui->checkBoxLoadFinalFile->setChecked(false);
-            loadFinalFile = 0;
+        doOn_buttonConfirm_clicked();
+    } else {
+        if (!file.atEnd()) {//获得保存最近文件列表配置
+            QByteArray line = file.readLine();
+            QString str(line);
+            str.remove("\n");
+            if (str == "1") {
+                ui->checkBoxSaveFileList->setChecked(true);
+            } else if (str == "0")
+                ui->checkBoxSaveFileList->setChecked(false);
         }
+        if (!file.atEnd()) {//获得启动时打开最后文件配置
+            QByteArray line = file.readLine();
+            QString str(line);
+            str.remove("\n");
+            if (str == "1") {
+                ui->checkBoxLoadFinalFile->setChecked(true);
+                loadFinalFile = 1;
+            } else if (str == "0") {
+                ui->checkBoxLoadFinalFile->setChecked(false);
+                loadFinalFile = 0;
+            }
 
-    }
-    if (!file.atEnd()) {
-        QByteArray line = file.readLine();//获得最后打开文件
-        QString str(line);
-        str.remove("\n");
-        firstFileName = str;
-
-    }
-    while (!file.atEnd()) {//获得最近打开文件历史列表
-        QByteArray line = file.readLine();
-        QString str(line);
-        str.remove("\n");
-        if (!str.isEmpty()) {
-            recentFileList.append(str);
         }
+        if (!file.atEnd()) {
+            QByteArray line = file.readLine();//获得最后打开文件
+            QString str(line);
+            str.remove("\n");
+            firstFileName = str;
 
+        }
+        while (!file.atEnd()) {//获得最近打开文件历史列表
+            QByteArray line = file.readLine();
+            QString str(line);
+            str.remove("\n");
+            if (!str.isEmpty()) {
+                recentFileList.append(str);
+            }
+
+        }
     }
     if (!mainRecentFileList->isEmpty()) {//将主窗口最近历史列表添加到子窗口列表
         for (int i = mainRecentFileList->length() - 1; i >= 0 ; i-- ) {
@@ -121,7 +122,7 @@ void RecentHistoryDialog::on_buttonConfirm_clicked()
         lff = "0";
         firstFileName = "0";
     }
-    QFile file("E:\\qt\\project\\mynotepad\\recentFileList.txt");//打开该文件进入编辑模式
+    QFile file("recentFileList.txt");//打开该文件进入编辑模式
     if (file.open(QIODevice::WriteOnly)) { //如果被打开
         file.resize("tate.txt", 0); //清空内容
 
